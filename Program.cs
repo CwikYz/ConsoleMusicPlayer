@@ -15,7 +15,7 @@ namespace MusicPlayer
 
         static void Main()
         {
-            Console.WriteLine("Enter commands (play, pause, next, prev, add, shuffle, quit):");
+            Console.WriteLine("Enter commands (play, pause, stop, next, prev, add, shuffle, quit):");
             while (true)
             {
                 Console.Write("> ");
