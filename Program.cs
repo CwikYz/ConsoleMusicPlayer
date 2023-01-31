@@ -36,6 +36,9 @@ namespace MusicPlayer
                     case "resume":
                         Resume();
                         break;
+                    case "stop":
+                        Stop();
+                        break;
                     case "next":
                         Next();
                         break;
@@ -60,10 +63,10 @@ namespace MusicPlayer
 
         static void AddSong()
         {
-            Console.WriteLine("Enter song location:");
-            string? songLoc = Console.ReadLine();
-            playlist.Add(songLoc);
-            Console.WriteLine("Added: " + songLoc);
+                Console.WriteLine("Enter song location:");
+                string? songLoc = Console.ReadLine();
+                playlist.Add(songLoc);
+                Console.WriteLine("Added: " + songLoc);
         }
 
         static void PlaySong()
@@ -93,16 +96,36 @@ namespace MusicPlayer
             }
         }
 
+        static void Stop()
+        {
+            if (outputDevice != null)
+            {
+                outputDevice.Stop();
+                outputDevice.Dispose();
+                Console.WriteLine("Stoped.");
+            }
+        }
+
         static void Next()
         {
-            currentSongIndex = (currentSongIndex + 1) % playlist.Count;
-            PlaySong();
+            if (outputDevice != null)
+            {
+                outputDevice.Stop();
+                outputDevice.Dispose();
+                currentSongIndex = (currentSongIndex + 1) % playlist.Count;
+                PlaySong();
+            }
         }
 
         static void Prev()
-        {
-            currentSongIndex = (currentSongIndex + playlist.Count - 1) % playlist.Count;
-            PlaySong();
+            {
+                if (outputDevice != null)
+                {
+                    outputDevice.Stop();
+                    outputDevice.Dispose();
+                    currentSongIndex = (currentSongIndex + playlist.Count - 1) % playlist.Count;
+                    PlaySong();
+                }
         }
 
         static void Shuffle()
